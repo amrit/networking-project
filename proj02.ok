@@ -1,0 +1,16 @@
+{
+    "name": "Project 2",
+    "endpoint": "cal/cs168/fa15/proj2",
+    "src": [
+        "Sender.py"
+    ],
+    "tests": {
+        "ok-tools/placeholder.py" : "ok_test"
+    },
+    "protocols": [
+        "restore",
+        "file_contents",
+        "grading",
+        "backup"
+    ]
+}
