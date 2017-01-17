@@ -19,7 +19,7 @@ class BasicSender(object):
         if filename == None:
             self.infile = sys.stdin
         else:
-            self.infile = open(filename,"r")
+            self.infile = open(filename,"rb")
 
     # Waits until packet is received to return.
     def receive(self, timeout=None):

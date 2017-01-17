@@ -3,9 +3,10 @@ import os
 import socket
 import subprocess
 import time
+import traceback
 
 import Checksum
-from tests import BasicTest, RandomDropTest, SackRandomDropTest
+from tests import BasicTest, RandomDropTest, SackRandomDropTest, SeqnoAndTypeTest
 
 """
 Add the tests you want to run here. Don't modify anything outside this function!
@@ -15,10 +16,12 @@ you want to run. The tests automatically register themselves with the
 forwarder, so they will magically be run.
 """
 def tests_to_run(forwarder):
-    #BasicTest.BasicTest("BasicTest", forwarder, "README")
-    #RandomDropTest.RandomDropTest("RandDropTest", forwarder, "README")
+    BasicTest.BasicTest("BasicTest", forwarder, "README")
+    RandomDropTest.RandomDropTest("RandDropTest", forwarder, "README")
     SackRandomDropTest.SackRandomDropTest("SackTest", forwarder, "README")
-
+    SeqnoAndTypeTest.SeqnoAndTypeTest("BinaryDrpDat", f, "b.png", seqnos = range(0,10000,2), types = ["dat"])
+    SeqnoAndTypeTest.SeqnoAndTypeTest("DropSyn", f, "b.png", seqnos = range(0,10000), types = ["syn"])
+    SeqnoAndTypeTest.SeqnoAndTypeTest("DropAtBeginning", f, "b.png", seqnos = range(0,10), types = ["syn", "dat"])
 
 """
 Testing is divided into two pieces: this forwarder and a set of test cases in
@@ -115,7 +118,8 @@ class Forwarder(object):
             except (KeyboardInterrupt, SystemExit):
                 self.finish()
                 exit()
-            except:
+            except Exception, err:
+                #traceback.print_exc()
                 """ If anything happens, record as a failure.
                 """
                 print "%s fail" % t.name
